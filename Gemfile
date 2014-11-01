@@ -8,14 +8,14 @@ gem 'json'
 gem 'execjs'
 gem 'therubyracer'
 #gem 'ruby-debug'
-gem 'debugger'
+# gem 'debugger'
 gem "nokogiri"
 gem 'kaminari'
 gem 'jpmobile'
 gem 'devise'
 gem 'carrierwave'
 gem 'fog'
-gem "rmagick"
+# gem "rmagick"
 gem 'exception_notification', require: "exception_notifier"
 gem 'omniauth-facebook'
 gem 'omniauth-twitter'
