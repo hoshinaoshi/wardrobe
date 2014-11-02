@@ -25,7 +25,7 @@ $(function() {
         matchingContainer.append( container );
 
         camera = new THREE.PerspectiveCamera( 45, windowWidth / windowHeight, 1, 2000 );
-        camera.position.z = 1200;
+        camera.position.z = 100;
 
         // scene
 
@@ -50,9 +50,11 @@ $(function() {
         var texture = new THREE.Texture();
 
         var onProgress = function ( xhr ) {
+
             if ( xhr.lengthComputable ) {
                 var percentComplete = xhr.loaded / xhr.total * 100;
                 console.log( Math.round(percentComplete, 2) + '% downloaded' );
+                $("#matching-progress").css("width", Math.round(percentComplete, 2) + "%");
             }
         };
 
@@ -84,7 +86,7 @@ $(function() {
             } );
 
             object.position.y = - 800;
-            object.position.z = - 800;
+            object.position.z = - 1000;
             scene.add( object );
 
         }, onProgress, onError );
@@ -118,7 +120,7 @@ $(function() {
     function onDocumentMouseMove( event ) {
 
         mouseX = ( event.clientX - windowHalfX ) / 2;
-        mouseY = ( event.clientY - windowHalfY ) / 2;
+        // mouseY = ( event.clientY - windowHalfY ) / 2;
 
     }
 
