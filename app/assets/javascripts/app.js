@@ -1,5 +1,6 @@
 $(function() {
 
+    var matchingModel;
     var container;
 
     var camera, scene, renderer;
@@ -75,6 +76,7 @@ $(function() {
         var loader = new THREE.OBJLoader( manager );
         loader.load( '/assets/obj/Sense.obj', function ( object ) {
 
+            matchingModel = object;
             object.traverse( function ( child ) {
 
                 if ( child instanceof THREE.Mesh ) {
@@ -85,8 +87,9 @@ $(function() {
 
             } );
 
-            object.position.y = - 800;
+            object.position.y = -800;
             object.position.z = - 1000;
+            // object.rotation.z = 1000;
             scene.add( object );
 
         }, onProgress, onError );
@@ -121,6 +124,9 @@ $(function() {
 
         mouseX = ( event.clientX - windowHalfX ) / 2;
         // mouseY = ( event.clientY - windowHalfY ) / 2;
+        var cp = matchingContainer[0].getBoundingClientRect();
+        matchingModel.rotation.y = (event.clientX-cp.left-160) / 72;
+        // matchingModel.rotation.x = (event.clientY-cp.top-210) / 54;
 
     }
 
@@ -135,10 +141,10 @@ $(function() {
 
     function render() {
 
-        camera.position.x += ( mouseX - camera.position.x ) * .05;
-        camera.position.y += ( - mouseY - camera.position.y ) * .05;
+        // camera.position.x += ( mouseX - camera.position.x ) * .05;
+        // camera.position.y += ( - mouseY - camera.position.y ) * .05;
 
-        camera.lookAt( scene.position );
+        // camera.lookAt( scene.position );
 
         renderer.render( scene, camera );
 
