@@ -94,9 +94,11 @@ $(function() {
 
         }, onProgress, onError );
 
-        //
-
+        // 背景を透過にする場合は下記
+        // THREE.WebGLRenderer({ alpha: true });
         renderer = new THREE.WebGLRenderer();
+        // 色調整
+        renderer.setClearColor( 0xffffff, 1);
         renderer.setSize( windowWidth, windowHeight );
         container.appendChild( renderer.domElement );
 
