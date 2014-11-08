@@ -1,6 +1,6 @@
 class TopController < ApplicationController
   def index
   end
-  def index2
+  def test
   end
 end

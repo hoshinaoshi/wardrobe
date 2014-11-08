@@ -1,5 +1,4 @@
 Wardrobe::Application.routes.draw do
-  get "top/index"
-  get "top/index2"
-  root to: 'top#index'
+  get "/", to: "top#index"
+  get "/test", to: "top#test"
 end

@@ -1,11 +1,10 @@
-@import url(http://fonts.googleapis.com/css?family=Pacifico);
+@import url(http://fonts.googleapis.com/css?family=Hammersmith+One);
 
 body {
 }
 
 body * {
     font-family: 'Hiragino Kaku Gothic Pro', Meiryo UI, sans-serif;
-    color: #34495e;
 }
 
 canvas {
@@ -30,8 +29,7 @@ canvas {
 }
 
 .wrapper-header {
-    background-color: #34495e;
-    padding: 50px 0;
+    padding: 50px 0 30px;
 }
 
 .inner {
@@ -40,10 +38,9 @@ canvas {
 }
 
 .logo {
-    font-family: 'Pacifico', cursive;
+    font-family: 'Hammersmith One', sans-serif;
     font-size: 4em;
     font-weight: bold;
-    color: #f1c40f !important;
 }
 
 .body {
@@ -61,7 +58,27 @@ canvas {
 }
 
 .selector {
-    background-color: #eee;
-    height: 200px;
+    padding-left: 0;
     margin-bottom: 20px;
+    overflow: auto;
+    max-height: 300px;
+    background-color: #eee;
+    border-radius: 2px;
+}
+
+.selector-item {
+    padding: 5px;
+}
+
+.selector-item>div {
+    height: 200px;
+    border-radius: 2px;
+    background-color: #fff;
+    position: relative;
+}
+
+.btn-tryon {
+    position: absolute;
+    right: 5px;
+    bottom: 5px;
 }
