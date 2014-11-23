@@ -1,83 +1,70 @@
+<script type="text/javascript">
+  pattern = "<%= @pattern %>"
+</script>
 <div class="wrapper wrapper-body">
 <div class="inner inner-body">
     <div class="row">
         <div class="col-md-4">
             <div class="matching">
-                <div class="progress">
-                    <div id="matching-progress" class="progress-bar progress-bar-striped active " role="progressbar" aria-valuenow="0" aria-valuemin="0" aria-valuemax="100">
-                        <span class="sr-only">45% Complete</span>
-                    </div>
-                </div>
                 <div id="matching-container">
                 </div>
             </div>
         </div>
         <div class="col-md-8">
-            <h3>トップス</h3>
-            <div class="row selector selector-tops">
-                <div class="col-md-3 selector-item">
-                    <div>
-                        <button class="btn btn-default btn-tryon">試着する</button>
-                    </div>
-                </div>
-                <div class="col-md-3 selector-item">
-                    <div>
-                        <button class="btn btn-default btn-tryon">試着する</button>
-                    </div>
-                </div>
-                <div class="col-md-3 selector-item">
-                    <div>
-                        <button class="btn btn-default btn-tryon">試着する</button>
-                    </div>
-                </div>
-                <div class="col-md-3 selector-item">
-                    <div>
-                        <button class="btn btn-default btn-tryon">試着する</button>
-                    </div>
-                </div>
-                <div class="col-md-3 selector-item">
-                    <div>
-                        <button class="btn btn-default btn-tryon">試着する</button>
-                    </div>
-                </div>
-                <div class="col-md-3 selector-item">
-                    <div>
-                        <button class="btn btn-default btn-tryon">試着する</button>
-                    </div>
+          <div class="row">
+            <div class="row selector col-md-6">
+                <h3>アウター</h3>
+                <div class="col-md-6 selector-item">
+                  <div id='outer1' class="col-md-6 selector-item selector-item-child">
+                    <%= image_tag '/assets/outer1.png', class: 'select-img' %>
+                  </div>
+                  <div class="col-md-6 selector-item selector-item-button">
+                    <%= link_to '試着', root_path(pattern: 'inner1'), class: "btn #{['/assets/obj/outer1.ply', '/assets/obj/inner2.ply'].include?(@pattern) ? 'btn-info' : 'btn-default'}" %>
+                    <div class="btn btn-warning">カートへ追加</div>
+                  </div>
                 </div>
             </div>
-            <h3>ボトムス</h3>
-            <div class="row selector selector-bottoms">
-                <div class="col-md-3 selector-item">
-                    <div>
-                        <button class="btn btn-default btn-tryon">試着する</button>
-                    </div>
+            <div class="row selector col-md-6">
+                <h3>インナー</h3>
+                <div class="col-md-6 selector-item">
+                  <div id='inner1' class="col-md-6 selector-item selector-item-child">
+                    <%= image_tag '/assets/inner1.png', class: 'select-img' %>
+                  </div>
+                  <div class="col-md-6 selector-item selector-item-button">
+                    <%= link_to '試着', root_path(pattern: 'inner2'), class: "btn #{['/assets/obj/inner1.ply', '/assets/obj/inner2.ply'].include?(@pattern) ? 'btn-info' : 'btn-default'}" %>
+                    <div class="btn btn-warning">カートへ追加</div>
+                  </div>
                 </div>
-                <div class="col-md-3 selector-item">
-                    <div>
-                        <button class="btn btn-default btn-tryon">試着する</button>
-                    </div>
+                <div class="col-md-6 selector-item">
+                  <div id='inner2' class="col-md-6 selector-item selector-item-child">
+                    <%= image_tag '/assets/inner2.png', class: 'select-img' %>
+                  </div>
+                  <div class="col-md-6 selector-item selector-item-button">
+                    <div class="btn <%= ['/assets/obj/outer1.ply'].include?(@pattern) ? 'btn-info' : 'btn-default' %>">試着</div>
+                    <div class="btn btn-warning">カートへ追加</div>
+                  </div>
                 </div>
-                <div class="col-md-3 selector-item">
-                    <div>
-                        <button class="btn btn-default btn-tryon">試着する</button>
-                    </div>
+            </div>
+          </div>
+          <div class="row">
+            <div class="row selector col-md-6">
+                <h3>ボトムス</h3>
+                <div class="col-md-6 selector-item">
+                  <div class="col-md-6 selector-item selector-item-child">
+                    <%= image_tag '/assets/bottoms.png', class: 'select-img' %>
+                  </div>
+                  <div class="col-md-6 selector-item selector-item-button">
+                    <div class="btn btn-default">試着</div>
+                    <div class="btn btn-warning">カートへ追加</div>
+                  </div>
                 </div>
-                <div class="col-md-3 selector-item">
-                    <div>
-                        <button class="btn btn-default btn-tryon">試着する</button>
-                    </div>
-                </div>
-                <div class="col-md-3 selector-item">
-                    <div>
-                        <button class="btn btn-default btn-tryon">試着する</button>
-                    </div>
-                </div>
-                <div class="col-md-3 selector-item">
-                    <div>
-                        <button class="btn btn-default btn-tryon">試着する</button>
-                    </div>
-                </div>
+            </div>
+          </div>
+          <div class="row">
+            <div class="row selector col-md-6">
+                <h3 id="testtest">ボトムス</h3>
+            </div>
+          </div>
         </div>
     </div>
 </div>

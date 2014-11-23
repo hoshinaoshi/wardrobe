@@ -1,155 +1,167 @@
 $(function() {
 
-    var matchingModel;
-    var container;
+			var container, stats;
 
-    var camera, scene, renderer;
+			var camera, cameraTarget, scene, renderer, mesh, geometry, material;
+    
+                        var matchingContainer = $("#matching-container");
+                        var windowWidth = matchingContainer.width();
+                        var windowHeight = matchingContainer.height();
 
-    var mouseX = 0, mouseY = 0;
+			init();
+			animate();
 
-    var matchingContainer = $("#matching-container");
-    // var windowWidth = window.innerWidth;
-    // var windowHeight = window.innerHeight;
-    var windowWidth = matchingContainer.width();
-    var windowHeight = matchingContainer.height();
-    var windowHalfX = windowWidth / 2;
-    var windowHalfY = windowHeight / 2;
+			function init() {
+
+				//container = document.createElement( 'div' );
+				//document.body.appendChild( container );
+				container = document.createElement( 'div' );
+				matchingContainer.append( container );
+
+				camera = new THREE.PerspectiveCamera( 35, windowWidth / windowHeight, 1, 15 );
+				camera.position.set( 3, 0.15, 3 );
+
+				cameraTarget = new THREE.Vector3( 0, -0.25, 0 );
+
+				scene = new THREE.Scene();
+				scene.fog = new THREE.Fog( 0x72645b, 2, 15 );
 
 
+				// Ground
+
+				var plane = new THREE.Mesh( new THREE.PlaneGeometry( 40, 40 ), new THREE.MeshPhongMaterial( { ambient: 0x999999, color: 0x999999, specular: 0x101010 } ) );
+				plane.rotation.x = -Math.PI/2;
+				plane.position.y = -0.5;
+				scene.add( plane );
+
+				plane.receiveShadow = true;
+
+
+				// PLY file
+
+				var loader = new THREE.PLYLoader();
+				loader.addEventListener( 'load', function ( event ) {
+
+					geometry = event.content;
+					material = new THREE.MeshBasicMaterial( { vertexColors: THREE.VertexColors } );
+					mesh = new THREE.Mesh( geometry, material );
+
+					if(pattern == "/assets/obj/inner1.ply"){
+                                          mesh.position.set( 0, 0, 0 );
+                                        }
+                                        else if(pattern == "/assets/obj/inner2.ply"){
+                                          mesh.position.set( 0, 0, 0 );
+                                        }
+                                        else if(pattern == "/assets/obj/outer1.ply"){
+                                          mesh.position.set( 0, - 0.7, 0 );
+                                        }
+					mesh.rotation.set( 0, - Math.PI / 2, 0 );
+					if(pattern == "/assets/obj/inner1.ply"){
+					  mesh.scale.set( 0.00045, 0.00045, 0.00045 );
+                                        }
+                                        else if(pattern == "/assets/obj/inner2.ply"){
+					  mesh.scale.set( 0.00065, 0.00065, 0.00065 );
+                                        }
+                                        else if(pattern == "/assets/obj/outer1.ply"){
+					  mesh.scale.set( 0.0008, 0.0008, 0.0008 );
+                                        }
+
+					mesh.castShadow = true;
+					mesh.receiveShadow = true;
+
+					scene.add( mesh );
+
+				} );
+                                //loader.load( '/assets/obj/gati.ply' );
+                                loader.load(pattern);
+
+                                // Lights
+
+				scene.add( new THREE.AmbientLight( 0x777777 ) );
+
+				addShadowedLight( 1, 1, 1, 0xffffff, 1.35 );
+				addShadowedLight( 0.5, 1, -1, 0xffaa00, 1 );
+
+				// renderer
+
+				renderer = new THREE.WebGLRenderer( { antialias: true } );
+				renderer.setSize( windowWidth, windowHeight );
+
+				renderer.setClearColor( scene.fog.color, 1 );
+
+				renderer.gammaInput = true;
+				renderer.gammaOutput = true;
+
+				renderer.shadowMapEnabled = true;
+				renderer.shadowMapCullFace = THREE.CullFaceBack;
+
+				container.appendChild( renderer.domElement );
+
+				window.addEventListener( 'resize', onWindowResize, false );
+
+			}
+
+			function addShadowedLight( x, y, z, color, intensity ) {
+
+				var directionalLight = new THREE.DirectionalLight( color, intensity );
+				directionalLight.position.set( x, y, z )
+				scene.add( directionalLight );
+
+				directionalLight.castShadow = true;
+				// directionalLight.shadowCameraVisible = true;
+
+				var d = 1;
+				directionalLight.shadowCameraLeft = -d;
+				directionalLight.shadowCameraRight = d;
+				directionalLight.shadowCameraTop = d;
+				directionalLight.shadowCameraBottom = -d;
+
+				directionalLight.shadowCameraNear = 1;
+				directionalLight.shadowCameraFar = 4;
+
+				directionalLight.shadowMapWidth = 1024;
+				directionalLight.shadowMapHeight = 1024;
+
+				directionalLight.shadowBias = -0.005;
+				directionalLight.shadowDarkness = 0.15;
+
+			}
+
+			function onWindowResize() {
+
+				camera.aspect = windowWidth / windowHeight;
+				camera.updateProjectionMatrix();
+
+                                renderer.setSize( windowWidth, windowHeight );
+
+			}
+
+			function animate() {
+
+				requestAnimationFrame( animate );
+
+				render();
+
+			}
+
+			function render() {
+
+				var timer = Date.now() * 0.0005;
+
+				camera.position.x = Math.sin( timer ) * 3;
+				camera.position.z = Math.cos( timer ) * 3;
+
+				camera.lookAt( cameraTarget );
+
+				renderer.render( scene, camera );
+
+			}
+
+  $('#testtest').on('click', function(){
+    scene.remove( mesh );
+    scene.remove( geometry );
+    geometry.dispose();
+    material.dispose();
     init();
-    animate();
-
-
-    function init() {
-
-        container = document.createElement( 'div' );
-        matchingContainer.append( container );
-
-        camera = new THREE.PerspectiveCamera( 45, windowWidth / windowHeight, 1, 2000 );
-        camera.position.z = 100;
-
-        // scene
-
-        scene = new THREE.Scene();
-
-        var ambient = new THREE.AmbientLight( 0x101030 );
-        scene.add( ambient );
-
-        var directionalLight = new THREE.DirectionalLight( 0xffeedd );
-        directionalLight.position.set( 0, 0, 1 );
-        scene.add( directionalLight );
-
-        // texture
-
-        var manager = new THREE.LoadingManager();
-        manager.onProgress = function ( item, loaded, total ) {
-
-            console.log( item, loaded, total );
-
-        };
-
-        var texture = new THREE.Texture();
-
-        var onProgress = function ( xhr ) {
-
-            if ( xhr.lengthComputable ) {
-                var percentComplete = xhr.loaded / xhr.total * 100;
-                console.log( Math.round(percentComplete, 2) + '% downloaded' );
-                $("#matching-progress").css("width", Math.round(percentComplete, 2) + "%");
-            }
-        };
-
-        var onError = function ( xhr ) {
-        };
-
-
-        var loader = new THREE.ImageLoader( manager );
-        loader.load( '/assets/IMG_0119.JPG', function ( image ) {
-
-            texture.image = image;
-            texture.needsUpdate = true;
-
-        } );
-
-        // model
-
-        var loader = new THREE.OBJLoader( manager );
-        loader.load( '/assets/obj/Sense.obj', function ( object ) {
-
-            matchingModel = object;
-            object.traverse( function ( child ) {
-
-                if ( child instanceof THREE.Mesh ) {
-
-                    child.material.map = texture;
-
-                }
-
-            } );
-
-            object.position.y = -800;
-            object.position.z = - 1000;
-            // object.rotation.z = 1000;
-            scene.add( object );
-
-        }, onProgress, onError );
-
-        // 背景を透過にする場合は下記
-        // THREE.WebGLRenderer({ alpha: true });
-        renderer = new THREE.WebGLRenderer();
-        // 色調整
-        renderer.setClearColor( 0xffffff, 1);
-        renderer.setSize( windowWidth, windowHeight );
-        container.appendChild( renderer.domElement );
-
-        document.addEventListener( 'mousemove', onDocumentMouseMove, false );
-
-        //
-
-        window.addEventListener( 'resize', onWindowResize, false );
-
-    }
-
-    function onWindowResize() {
-
-        windowHalfX = windowWidth / 2;
-        windowHalfY = windowHeight / 2;
-
-        camera.aspect = windowWidth / windowHeight;
-        camera.updateProjectionMatrix();
-
-        renderer.setSize( windowWidth, windowHeight );
-
-    }
-
-    function onDocumentMouseMove( event ) {
-
-        mouseX = ( event.clientX - windowHalfX ) / 2;
-        // mouseY = ( event.clientY - windowHalfY ) / 2;
-        var cp = matchingContainer[0].getBoundingClientRect();
-        matchingModel.rotation.y = (event.clientX-cp.left-160) / 72;
-        // matchingModel.rotation.x = (event.clientY-cp.top-210) / 54;
-
-    }
-
-    //
-
-    function animate() {
-
-        requestAnimationFrame( animate );
-        render();
-
-    }
-
-    function render() {
-
-        // camera.position.x += ( mouseX - camera.position.x ) * .05;
-        // camera.position.y += ( - mouseY - camera.position.y ) * .05;
-
-        // camera.lookAt( scene.position );
-
-        renderer.render( scene, camera );
-
-    }
-
+  });
 });

@@ -12,12 +12,12 @@ development:
   adapter: mysql2
   encoding: utf8
   reconnect: false
-  database: wardrobe
+  database: choistyle
   pool: 5
   username: root
-  password: root
+  password: "@a1234567"
   host: localhost
-  socket: /var/run/mysqld/mysqld.sock
+  socket: /var/lib/mysql/mysql/mysql.sock
 
 # Warning: The database defined as "test" will be erased and
 # re-generated from your development database when you run "rake".
@@ -26,9 +26,9 @@ production:
   adapter: mysql2
   encoding: utf8
   reconnect: false
-  database: cwardrobe
+  database: choistyle
   pool: 5
   username: root
-  password: root
+  password: "@a1234567"
   host: localhost
   socket: /var/lib/mysql/mysql/mysql.sock
