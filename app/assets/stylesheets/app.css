@@ -61,17 +61,26 @@ canvas {
     padding-left: 0;
     margin-bottom: 20px;
     overflow: auto;
-    max-height: 300px;
-    background-color: #eee;
+    max-height: 320px;
     border-radius: 2px;
+    margin-left: 5px;
 }
 
 .selector-item {
     padding: 5px;
+    width: 180px;
+    height: 300px;
 }
 
-.selector-item>div {
+.selector-item-child {
     height: 200px;
+    border-radius: 2px;
+    background-color: #fff;
+    position: relative;
+    cursor: pointer;
+}
+.selector-item-button {
+    height: 50px;
     border-radius: 2px;
     background-color: #fff;
     position: relative;
@@ -81,4 +90,9 @@ canvas {
     position: absolute;
     right: 5px;
     bottom: 5px;
+}
+.select-img {
+    position: absolute;
+    width: 180px;
+    height: 200px;
 }
